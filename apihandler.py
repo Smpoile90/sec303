@@ -21,13 +21,15 @@ def parse_response(response):
     if (response["response"]["status"] == "401"):
         print("Invalid API Key")
         return None
-    elif (response["response"]["staus"] == "200"):
-        x = vuln.Vuln()
-        x.vulDBbuild(response["result"][0])
-        print(x.__str__())
-        dbhandler.write(x)
-        ##Returns the dict of VULN details
-        return response["result"][0]
+    elif (response["response"]["status"] == "200"):
+        rl = list()
+        for r in response["result"]:
+            x = vuln.Vuln()
+            x.vulDBbuild(r)
+            dbhandler.write(x)
+            rl.append(x)
+        ##Returns a list of vuln objects
+        return rl
     else:
         print ("Unknown API response")
         return None
@@ -67,12 +69,13 @@ def main():
 
     #If a specific vuln is requested use get_vuln
     if (args.id == None):
-        vuln_dict = search(args.query)
-        print (vuln_dict)
-
+        vuln_list = search(args.query)
+        for v in vuln_list:
+            print (v)
     else:
-
-        print( get_vuln(args.id))
+        vuln_list = get_vuln(args.id)
+        for v in vuln_list:
+            print(v)
 
 
 

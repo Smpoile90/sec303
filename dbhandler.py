@@ -22,8 +22,11 @@ conn = sqlite3.connect(DBFILE)
 c = conn.cursor()
 
 def write(vuln):
-   c.execute("INSERT INTO Vuls VALUES (?)",(vuln.id,vuln.title,vuln.time_create,vuln.time_change,vuln.risk_value,vuln.risk_name,vuln.cve_id,vuln.time_release))
-   conn.commit()
+    try:
+        c.execute("INSERT INTO Vuls VALUES (?,?,?,?,?,?,?,?)",(vuln.id,vuln.title,vuln.time_create,vuln.time_change,vuln.risk_value,vuln.risk_name,vuln.cve_id,vuln.time_release))
+        conn.commit()
+    except Exception:
+        pass
 
 def get_vuln_byID(id):
     conn = sqlite3.connect('vulnDB.db')
