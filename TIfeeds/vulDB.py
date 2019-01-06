@@ -5,10 +5,7 @@ import dbhandler
 import vuln
 
 VULDBKEY = ""
-VULNERSKEY = ""
 VULDBAPI = "https://vuldb.com/?api"
-
-
 
 def parse_args():
     parser = argparse.ArgumentParser(description="test")
@@ -59,7 +56,7 @@ def getKeys():
         global VULDBKEY, VULNERSKEY
         d = json.load(keys)
         VULDBKEY = d['keys']['vuldb']
-        VULNERSKEY = d['keys']['vulners']
+
     return
 getKeys()
 

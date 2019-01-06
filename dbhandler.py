@@ -25,7 +25,8 @@ def write(vuln):
     try:
         c.execute("INSERT INTO Vuls VALUES (?,?,?,?,?,?,?,?)",(vuln.id,vuln.title,vuln.time_create,vuln.time_change,vuln.risk_value,vuln.risk_name,vuln.cve_id,vuln.time_release))
         conn.commit()
-    except Exception:
+    except Exception as e:
+        print(e)
         pass
 
 def get_vuln_byID(id):
