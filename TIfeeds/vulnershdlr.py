@@ -1,5 +1,6 @@
 import json
 import vulners
+import vuln
 
 VULNERSKEY = None
 vulnersapi = vulners.Vulners()
@@ -28,6 +29,4 @@ def search_name_version(name,version):
 def get_vuln(id):
     result = vulnersapi.references(id)
     return result
-
-
 

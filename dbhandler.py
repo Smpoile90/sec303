@@ -6,9 +6,10 @@ DBFILE = 'vulnDB.db'
 
 def createDB():
     conn = sqlite3.connect(DBFILE)
-    command = "CREATE TABLE 'Vuls' ('id' INTEGER,'title' TEXT, 'time_create' TEXT," \
+    command = "CREATE TABLE 'Vuls' ('id' TEXT,'title' TEXT, 'time_create' TEXT," \
               "'time_change'	TEXT,	'risk_value'	TEXT,	'risk_name'	TEXT," \
-              "	'cve_id'	TEXT,	'time_release'	TEXT,PRIMARY KEY('id'));"
+              "	'cve_id'	TEXT,	'time_release'	TEXT,	`Description`	TEXT"\
+              ",PRIMARY KEY('id'));"
     c = conn.cursor()
     c.execute(command)
     conn.commit()
@@ -23,7 +24,7 @@ c = conn.cursor()
 
 def write(vuln):
     try:
-        c.execute("INSERT INTO Vuls VALUES (?,?,?,?,?,?,?,?)",(vuln.id,vuln.title,vuln.time_create,vuln.time_change,vuln.risk_value,vuln.risk_name,vuln.cve_id,vuln.time_release))
+        c.execute("INSERT INTO Vuls VALUES (?,?,?,?,?,?,?,?,?)",(vuln.id,vuln.title,vuln.time_create,vuln.time_change,vuln.risk_value,vuln.risk_name,vuln.cve_id,vuln.time_release,vuln.description))
         conn.commit()
     except Exception as e:
         print(e)
