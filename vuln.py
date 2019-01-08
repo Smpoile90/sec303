@@ -9,7 +9,7 @@ class Vuln:
         self.risk_name = response["vulnerability"]["risk"]["name"]
         self.cve_id = response["source"]["cve"]["id"]
         self.time_release = response["advisory"]["date"]
-        self.description = 'None'
+        #self.description = 'None'
 
     def dbBuild(self, dbresponse):
         self.id = dbresponse[1]
@@ -19,7 +19,7 @@ class Vuln:
         self.risk_value = dbresponse[4]
         self.cve_id = dbresponse[5]
         self.time_release = dbresponse[6]
-        self.description = dbresponse[7]
+        #self.description = dbresponse[7]
 
     def vulnersBuild(self,vulnersDict):
         self.id = vulnersDict['id']
@@ -30,10 +30,22 @@ class Vuln:
         self.risk_name = vulnersDict['cvss']['vector']
         self.cve_id = vulnersDict['type']
         self.time_release = self.time_create #DOESNT EXIST IN VULNERS
-        self.description = vulnersDict['description']
+        #self.description = vulnersDict['description']
+
+    def _default(self):
+        d = {}
+        d['id'] = self.id
+        d['title'] = self.title
+        d['time_create'] = self.time_create
+        d['time_change'] = self.time_change
+        d['risk_value'] = self.risk_value
+        d['risk_name'] = self.risk_name
+        d['cve_id'] = self.cve_id
+        d['time_release'] = self.time_release
+        return d
 
     def __str__(self):
-        string = "Vulners VulnID: {} Title: {} \nTime of Creation: {} Time Updated: {}\nRisk(CVSS): {} Risk: {}\nCVE_ID or Source: {} Time of Release: {}\n Description: {}\n"\
+        string = "Vulners VulnID: {} Title: {} \nTime of Creation: {} Time Updated: {}\nRisk(CVSS): {} Risk: {}\nCVE_ID or Source: {} Time of Release: {}\n"\
             .format(self.id,self.title,self.time_create,self.time_change,
-                self.risk_value, self.risk_name, self.cve_id,self.time_release,self.description)
+                self.risk_value, self.risk_name, self.cve_id,self.time_release)
         return string

@@ -24,15 +24,13 @@ c = conn.cursor()
 
 def write(vuln):
     try:
-        c.execute("INSERT INTO Vuls VALUES (?,?,?,?,?,?,?,?,?)",(vuln.id,vuln.title,vuln.time_create,vuln.time_change,vuln.risk_value,vuln.risk_name,vuln.cve_id,vuln.time_release,vuln.description))
+        c.execute("INSERT INTO Vuls VALUES (?,?,?,?,?,?,?,?)",(vuln.id,vuln.title,vuln.time_create,vuln.time_change,vuln.risk_value,vuln.risk_name,vuln.cve_id,vuln.time_release))
         conn.commit()
     except Exception as e:
         print(e)
         pass
 
 def get_vuln_byID(id):
-    conn = sqlite3.connect('vulnDB.db')
-    c = conn.cursor()
     c.execute("SELECT * from Vuls WHERE id = (?)",(id,))
     x = c.fetchone()
     if x is None:
@@ -41,6 +39,12 @@ def get_vuln_byID(id):
         v = vuln.Vuln()
         v.vulDBbuild(x)
         return x
+
+def getTests(port,service):
+    c.execute("select * from Tests where ports like '22' or services like 'sshd'")
+    return c.fetchall()
+
+
 
 def read():
     c.execute("SELECT * from Vuls")
