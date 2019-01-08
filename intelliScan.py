@@ -30,16 +30,13 @@ def queryTI(query):
             svvulnList.append(vul)
     return svvulnList
 
-
 def outputResults(file, data):
     with open(file, 'w') as f:
         json.dump(data, f)
 
-
 def customTest():
     # TODO
     pass
-
 
 def main():
     # Parse arguments
@@ -55,7 +52,7 @@ def main():
         print("Please enter a valid IP")
         return
 
-    ##Begin searching for vulnerabilities
+    # Begin searching for vulnerabilities
     # Search caches DB
     scan = scan['scan']
 
@@ -73,19 +70,21 @@ def main():
                 id = str(hkey) + "_" + str(pkey) + "_" + svname
                 resultDict[id] = queryTI(svname)
                 # Do query explicit tests
-                tests = dbhandler.getTests(str(pkey), port['name'])
-                for t in tests:
-                    d = {}
-                    exec(t[3])
-                    test = locals()['test']
-                    test(hkey, pkey)
+                #tests = dbhandler.getTests(str(pkey), port['name'])
+                #for t in tests:
+                #    exec(t[3],globals())
+                #    try:
+                #        if (test(hkey, pkey)):
+                #            resultDict[str(t[0])+"-"+id] = (t[4],)
+                #    except:
+                #        pass
 
-    ##Clean results wihtout vulnerabilties
+
+    # Clean results wihtout vulnerabilties
     dlist = []
     for k, v in resultDict.items():
         if len(v) == 0:
             dlist.append(k)
-
     for key in dlist:
         del resultDict[key]
 
@@ -98,7 +97,7 @@ def main():
     else:
         # output to stdout
         for k, v in resultDict.items():
-            print("Host_Port_Service: " + k)
+            print("\nHost_Port_Service: " + k)
             for vuln in v:
                 print(str(vuln) + "\n")
 
