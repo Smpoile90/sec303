@@ -11,5 +11,5 @@ query-string==1.0.2
 request==1.0.2
 requests==2.20.1
 six==1.12.0
-urllib3==1.24.1
+urllib3==1.24.2
 vulners==1.3.6
